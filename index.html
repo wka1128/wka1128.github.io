@@ -93,7 +93,8 @@
             
             <div class="mt-8 bg-slate-800/60 p-5 rounded-xl border border-slate-700 shadow-inner text-left">
                 <h3 class="text-sky-400 font-bold text-lg mb-2"><i class="fa-solid fa-circle-info"></i> 任務說明</h3>
-                <p class="text-base text-slate-300 leading-relaxed">系統將為你隨機指派路線並發問，集齊 10 個 QR 徽章後，<span class="text-rose-400 font-bold text-lg underline decoration-rose-500/50 underline-offset-4">需輸入終極密碼方可停止計時！</span></p>
+                <p class="text-base text-slate-300 leading-relaxed mb-2">系統將為你隨機指派路線並發問。答對可獲徽章；<span class="text-sky-300 font-bold">答錯將面臨 20 秒系統凍結懲罰！</span></p>
+                <p class="text-base text-slate-300 leading-relaxed">集齊 10 個 QR 徽章後，<span class="text-rose-400 font-bold text-lg underline decoration-rose-500/50 underline-offset-4">需輸入終極密碼方可停止計時！</span></p>
             </div>
         </div>
     </div>
@@ -111,7 +112,7 @@
             </div>
         </header>
 
-        <!-- 總部指令面板 (動態目標指派) -->
+        <!-- 總部指令面板 -->
         <div class="p-4 pb-0">
             <div id="target-directive" class="bg-slate-800 border border-sky-500/50 rounded-2xl p-4 flex items-center justify-between shadow-[0_4px_20px_rgba(14,165,233,0.2)] relative overflow-hidden transition-all">
                 <div class="absolute -right-4 -top-4 opacity-10">
@@ -142,14 +143,14 @@
             <!-- 由 JS 動態生成 10 個格子 -->
         </div>
 
-        <!-- 一般站點掃描按鈕 (集齊 10 個前顯示) -->
+        <!-- 掃描按鈕 -->
         <div id="action-scan" class="fixed bottom-6 left-0 right-0 px-6 flex justify-center z-20">
             <button onclick="openScanner()" class="bg-sky-500 hover:bg-sky-400 text-slate-900 rounded-full py-4 px-8 font-black text-xl shadow-[0_10px_30px_rgba(14,165,233,0.5)] border-2 border-sky-300 flex items-center gap-3 transition transform hover:scale-105">
                 <i class="fa-solid fa-qrcode"></i> 掃描站點 QR Code
             </button>
         </div>
 
-        <!-- 終極密碼輸入按鈕 (集齊 10 個後顯示) -->
+        <!-- 終極密碼輸入按鈕 -->
         <div id="action-final" class="fixed bottom-6 left-0 right-0 px-6 flex justify-center z-20 hidden">
             <button onclick="openFinalCodeModal()" class="w-full bg-rose-600 hover:bg-rose-500 text-white rounded-full py-4 px-8 font-black text-xl shadow-[0_10px_30px_rgba(225,29,72,0.5)] border-2 border-rose-400 flex items-center justify-center gap-3 transition transform hover:scale-105 animate-pulse">
                 <i class="fa-solid fa-lock"></i> 輸入終極密碼停止計時
@@ -210,9 +211,7 @@
             </div>
             <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 mb-6 text-center shadow-inner">
                 <p class="text-base font-bold text-sky-400 mb-4 bg-slate-900 p-3 rounded-lg border border-sky-900">密碼提示：<br>國家安全日定為每年幾月幾日？</p>
-                <!-- 限定輸入 4 位數 -->
                 <input type="number" id="final-code-input" pattern="[0-9]*" class="w-full bg-slate-950 border-2 border-slate-600 rounded-xl py-3 text-center text-white font-mono text-4xl tracking-[0.5em] focus:outline-none focus:border-rose-500 transition" placeholder="----" oninput="if(this.value.length > 4) this.value = this.value.slice(0, 4);">
-                
                 <p class="text-xs text-rose-500 font-bold mt-4 bg-rose-950/30 p-2 rounded"><i class="fa-solid fa-triangle-exclamation"></i> 警告：只有一次輸入機會，答錯即時淘汰！</p>
             </div>
             <button onclick="checkFinalCode()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-black text-xl py-4 rounded-xl shadow-[0_0_15px_rgba(225,29,72,0.4)] transition transform hover:scale-105">
@@ -221,7 +220,27 @@
         </div>
     </div>
 
-    <!-- ==================== 視圖 3A：任務成功 (過關) ==================== -->
+    <!-- ==================== 視圖 4：防護凍結 (懲罰畫面) ==================== -->
+    <div id="view-freeze" class="view-section min-h-screen justify-center items-center p-6 text-center relative overflow-hidden">
+        <!-- 冰凍裝飾背景 -->
+        <div class="absolute inset-0 bg-sky-900/30 backdrop-blur-md z-0 pointer-events-none"></div>
+        
+        <div class="relative z-10 w-full max-w-sm bg-slate-900/95 border-2 border-sky-400 rounded-3xl p-8 shadow-[0_0_50px_rgba(56,189,248,0.5)]">
+            <i class="fa-solid fa-snowflake text-8xl text-sky-300 mb-6 animate-pulse"></i>
+            <h1 class="text-3xl font-black text-white mb-2 tracking-widest">系統凍結</h1>
+            <p class="text-lg text-sky-300 font-bold mb-6">密碼錯誤，安全防護機制已啟動！</p>
+            
+            <div class="bg-slate-950 border border-sky-500/50 rounded-2xl p-6 mb-6 shadow-inner">
+                <div class="text-sm text-slate-400 mb-2 font-bold tracking-wider">解凍倒數</div>
+                <div id="freeze-timer-display" class="font-mono text-7xl font-black text-sky-400 drop-shadow-[0_0_15px_rgba(56,189,248,0.8)]">20</div>
+                <div class="text-sm text-slate-400 mt-2 font-mono">SECONDS</div>
+            </div>
+            
+            <p class="text-sm font-bold text-slate-400">解凍後請重新掃描站點以獲取新問題。</p>
+        </div>
+    </div>
+
+    <!-- ==================== 視圖 5A：任務成功 (過關) ==================== -->
     <div id="view-success" class="view-section min-h-screen justify-center items-center p-6 text-center">
         <i class="fa-solid fa-shield-check text-8xl text-emerald-500 mb-6 drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]"></i>
         <h1 class="text-4xl font-black text-white mb-2 tracking-widest">任務完成！</h1>
@@ -239,7 +258,7 @@
         </p>
     </div>
 
-    <!-- ==================== 視圖 3B：任務失敗 (淘汰) ==================== -->
+    <!-- ==================== 視圖 5B：任務失敗 (淘汰) ==================== -->
     <div id="view-eliminated" class="view-section min-h-screen justify-center items-center p-6 text-center">
         <i class="fa-solid fa-skull-crossbones text-8xl text-rose-600 mb-6 drop-shadow-[0_0_20px_rgba(225,29,72,0.5)] animate-pulse"></i>
         <h1 class="text-4xl font-black text-white mb-2 tracking-widest">任務失敗</h1>
@@ -319,7 +338,9 @@
             passportHistory: [],
             nextTargetStation: null,
             currentQuizData: null,
-            html5QrcodeScanner: null
+            html5QrcodeScanner: null,
+            freezeTimeout: null,
+            freezeTimerInterval: null
         };
 
         function switchView(viewId) {
@@ -402,7 +423,6 @@
             document.getElementById('badge-count').innerText = state.completedCount;
             document.getElementById('progress-bar').style.width = `${(state.completedCount / state.targetCount) * 100}%`;
 
-            // 當集齊 10 個，不停止計時，切換底部按鈕為「輸入終極密碼」
             if (state.completedCount >= state.targetCount) {
                 document.getElementById('action-scan').classList.add('hidden');
                 document.getElementById('test-scan-btn').classList.add('hidden');
@@ -429,7 +449,6 @@
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            // 清空密碼輸入框
             if(modalId === 'modal-final-code') document.getElementById('final-code-input').value = "";
             
             if(modalId === 'modal-scanner' && state.html5QrcodeScanner) {
@@ -485,6 +504,26 @@
             document.getElementById('modal-quiz').classList.add('active');
         }
 
+        // --- 啟動冷凍懲罰程序 ---
+        function startFreezePenalty() {
+            switchView('view-freeze');
+            let freezeTime = 20; // 20 秒倒數
+            document.getElementById('freeze-timer-display').innerText = freezeTime;
+            
+            // 確保不會有多重計時器疊加
+            if(state.freezeTimerInterval) clearInterval(state.freezeTimerInterval);
+            
+            state.freezeTimerInterval = setInterval(() => {
+                freezeTime--;
+                document.getElementById('freeze-timer-display').innerText = freezeTime;
+                
+                if (freezeTime <= 0) {
+                    clearInterval(state.freezeTimerInterval);
+                    switchView('view-dashboard'); // 解凍後返回遊戲主控台
+                }
+            }, 1000);
+        }
+
         function checkAnswer(selectedIndex, btnElement) {
             const quizData = state.currentQuizData;
             const optionsContainer = document.getElementById('quiz-options');
@@ -493,6 +532,7 @@
             Array.from(optionsContainer.children).forEach(btn => btn.disabled = true);
 
             if (selectedIndex === quizData.question.answer) {
+                // 答對邏輯
                 btnElement.classList.replace('bg-slate-800', 'bg-emerald-600');
                 btnElement.classList.replace('border-slate-600', 'border-emerald-500');
                 
@@ -536,13 +576,20 @@
                 }, 4000);
                 
             } else {
+                // 答錯邏輯：準備進入冷凍
                 btnElement.classList.replace('bg-slate-800', 'bg-rose-600');
                 btnElement.classList.replace('border-slate-600', 'border-rose-500');
                 optionsContainer.children[quizData.question.answer].classList.replace('bg-slate-800', 'bg-emerald-900');
                 optionsContainer.children[quizData.question.answer].classList.replace('border-slate-600', 'border-emerald-500');
                 
-                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> 答案錯誤！系統防護已重置。<br>請關閉視窗，重新掃描以獲取【新問題】。';
-                feedback.className = "text-center mt-4 font-bold text-sm text-rose-400 block border border-rose-500/50 bg-rose-900/30 p-3 rounded-lg";
+                feedback.innerHTML = '<i class="fa-solid fa-snowflake"></i> 答案錯誤！系統即將啟動防護凍結程序...';
+                feedback.className = "text-center mt-4 font-bold text-sm text-sky-300 block border border-sky-500/50 bg-sky-900/30 p-3 rounded-lg animate-pulse";
+                
+                // 短暫顯示「答案錯誤」後，關閉題目框並啟動冷凍懲罰
+                setTimeout(() => {
+                    closeModal('modal-quiz');
+                    startFreezePenalty();
+                }, 2000);
             }
         }
 
@@ -560,18 +607,16 @@
                 return;
             }
 
-            // 無論對錯，一旦提交立刻停止計時！
             clearInterval(state.timerInterval);
             const finalTimeStr = document.getElementById('display-timer').innerText;
             
             closeModal('modal-final-code');
 
-            if (code === "0415") { // 國家安全日 4月15日
+            if (code === "0415") { 
                 document.getElementById('final-team').innerText = state.teamName;
                 document.getElementById('final-timer').innerText = finalTimeStr;
                 switchView('view-success');
             } else {
-                // 答錯淘汰
                 document.getElementById('eliminated-team').innerText = state.teamName;
                 document.getElementById('eliminated-timer').innerText = finalTimeStr;
                 switchView('view-eliminated');
