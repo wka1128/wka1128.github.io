@@ -93,7 +93,7 @@
             
             <div class="mt-8 bg-slate-800/60 p-5 rounded-xl border border-slate-700 shadow-inner text-left">
                 <h3 class="text-sky-400 font-bold text-lg mb-2"><i class="fa-solid fa-circle-info"></i> 任務說明</h3>
-                <p class="text-base text-slate-300 leading-relaxed mb-2">系統將為你隨機指派路線並發問。答對可獲徽章；<span class="text-sky-300 font-bold">答錯將面臨 20 秒系統凍結懲罰！</span></p>
+                <p class="text-base text-slate-300 leading-relaxed mb-2">系統將為你隨機指派路線並發問。答對可獲徽章；<span class="text-sky-300 font-bold">答錯將面臨 15 秒系統凍結懲罰！</span></p>
                 <p class="text-base text-slate-300 leading-relaxed">集齊 10 個 QR 徽章後，<span class="text-rose-400 font-bold text-lg underline decoration-rose-500/50 underline-offset-4">需輸入終極密碼方可停止計時！</span></p>
             </div>
         </div>
@@ -232,7 +232,7 @@
             
             <div class="bg-slate-950 border border-sky-500/50 rounded-2xl p-6 mb-6 shadow-inner">
                 <div class="text-sm text-slate-400 mb-2 font-bold tracking-wider">解凍倒數</div>
-                <div id="freeze-timer-display" class="font-mono text-7xl font-black text-sky-400 drop-shadow-[0_0_15px_rgba(56,189,248,0.8)]">20</div>
+                <div id="freeze-timer-display" class="font-mono text-7xl font-black text-sky-400 drop-shadow-[0_0_15px_rgba(56,189,248,0.8)]">15</div>
                 <div class="text-sm text-slate-400 mt-2 font-mono">SECONDS</div>
             </div>
             
@@ -280,26 +280,26 @@
     <script>
         // --- 1. 物理站點列表 (20 個) ---
         const STATIONS_DATA = [
-            { id: "STATION_01", location: "操場台階" },
-            { id: "STATION_02", location: "操場體育室" },
-            { id: "STATION_03", location: "操場籃球架" },
-            { id: "STATION_04", location: "操場看台下方" },
-            { id: "STATION_05", location: "操場旗杆" },
-            { id: "STATION_06", location: "小食部飲水機後" },
-            { id: "STATION_07", location: "小食部垃圾桶旁" },
-            { id: "STATION_08", location: "小食部左側牆" },
-            { id: "STATION_09", location: "小食部收銀台旁" },
-            { id: "STATION_10", location: "健身室外" },
-            { id: "STATION_11", location: "禮堂側門" },
-            { id: "STATION_12", location: "禮堂舞台側" },
-            { id: "STATION_13", location: "禮堂正門門框" },
-            { id: "STATION_14", location: "禮堂入口公告板" },
-            { id: "STATION_15", location: "實驗桌 1" },
-            { id: "STATION_16", location: "門口右側" },
-            { id: "STATION_17", location: "視藝室" },
-            { id: "STATION_18", location: "音樂室" },
-            { id: "STATION_19", location: "圖書館正門" },
-            { id: "STATION_20", location: "電腦室外" }
+            { id: "STATION_01", location: "操場體育室" },
+            { id: "STATION_02", location: "看台" },
+            { id: "STATION_03", location: "旋轉梯" },
+            { id: "STATION_04", location: "羽毛球場" },
+            { id: "STATION_05", location: "小食部" },
+            { id: "STATION_06", location: "後花園" },
+            { id: "STATION_07", location: "三樓前樓梯" },
+            { id: "STATION_08", location: "二樓後樓梯" },
+            { id: "STATION_09", location: "學生電話櫃" },
+            { id: "STATION_10", location: "國家安全壁報" },
+            { id: "STATION_11", location: "家政室" },
+            { id: "STATION_12", location: "學生活動中心" },
+            { id: "STATION_13", location: "地理室" },
+            { id: "STATION_14", location: "物理室" },
+            { id: "STATION_15", location: "視藝室" },
+            { id: "STATION_16", location: "音樂室" },
+            { id: "STATION_17", location: "圖書館" },
+            { id: "STATION_18", location: "五樓電腦室" },
+            { id: "STATION_19", location: "健身室外" },
+            { id: "STATION_20", location: "禮堂正門" }
         ];
 
         // --- 2. 隨機國安題庫 (20 題) ---
@@ -507,7 +507,7 @@
         // --- 啟動冷凍懲罰程序 ---
         function startFreezePenalty() {
             switchView('view-freeze');
-            let freezeTime = 20; // 20 秒倒數
+            let freezeTime = 15; // 15 秒倒數
             document.getElementById('freeze-timer-display').innerText = freezeTime;
             
             // 確保不會有多重計時器疊加
